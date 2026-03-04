@@ -1,6 +1,2 @@
 psutil>=5.8.0
 colorama>=0.4.4
-prettytable>=2.0.0
-requests>=2.26.0
-psutil>=5.8.0
-colorama>=0.4.4
