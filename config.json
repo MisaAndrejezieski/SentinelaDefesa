@@ -1,0 +1,16 @@
+{
+    "configuracoes": {
+        "nome_sistema": "Sentinela - Sistema de Defesa",
+        "versao": "1.0.0",
+        "autor": "Seu Nome",
+        "limite_cpu_alerta": 70,
+        "intervalo_monitoramento": 5,
+        "salvar_logs": true,
+        "modo_honeypot": false
+    },
+    "processos_suspeitos": [
+        "miner", "xmr", "coin", "crypto", "pool",
+        "hash", "cpuminer", "xmrig", "minerd"
+    ],
+    "portas_honeypot": [3333, 4444, 5555, 8080]
+}
