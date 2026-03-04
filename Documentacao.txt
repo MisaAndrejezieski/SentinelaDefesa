@@ -1,0 +1,1092 @@
+🚀 PROJETO COMPLETO: "Sentinela - Sistema de Defesa Cibernética"
+Perfeito! Vou te ajudar a criar um programa completo e profissional juntando tudo que te mostrei! 🛡️
+
+📁 ESTRUTURA DO PROJETO
+text
+SentinelaDefesa/
+├── README.md                 # Documentação do projeto
+├── requirements.txt          # Dependências Python
+├── config.json               # Configurações do sistema
+├── main.py                    # Programa principal
+├── modules/
+│   ├── __init__.py
+│   ├── detector_processos.py  # Detecta processos suspeitos
+│   ├── monitor_recursos.py    # Monitora CPU/RAM
+│   ├── honeypot_simples.py     # Simula servidor (opcional)
+│   └── relatorios.py          # Gera relatórios
+└── logs/                      # Pasta para salvar logs
+🔧 PASSO A PASSO PARA CRIAR
+Passo 1: Criar a estrutura no VSCode
+bash
+# Abra o terminal do VSCode (Ctrl + ')
+# Crie a pasta principal
+mkdir SentinelaDefesa
+cd SentinelaDefesa
+
+# Crie as subpastas
+mkdir modules logs
+Passo 2: Criar o arquivo requirements.txt
+txt
+# requirements.txt
+psutil>=5.8.0
+colorama>=0.4.4
+prettytable>=2.0.0
+requests>=2.26.0
+Passo 3: Criar o config.json
+json
+{
+    "configuracoes": {
+        "nome_sistema": "Sentinela - Sistema de Defesa",
+        "versao": "1.0.0",
+        "autor": "Seu Nome",
+        "limite_cpu_alerta": 70,
+        "intervalo_monitoramento": 5,
+        "salvar_logs": true,
+        "modo_honeypot": false
+    },
+    "processos_suspeitos": [
+        "miner", "xmr", "coin", "crypto", "pool",
+        "hash", "cpuminer", "xmrig", "minerd"
+    ],
+    "portas_honeypot": [3333, 4444, 5555, 8080]
+}
+Passo 4: Criar o módulo detector_processos.py
+python
+# modules/detector_processos.py
+import psutil
+import json
+
+class DetectorProcessos:
+    def __init__(self, config):
+        self.config = config
+        self.processos_suspeitos = config.get('processos_suspeitos', [])
+        self.historico = []
+        
+    def escanear(self):
+        """Escaneia processos em execução"""
+        suspeitos = []
+        todos_processos = []
+        
+        for proc in psutil.process_iter(['pid', 'name', 'cpu_percent', 'memory_percent']):
+            try:
+                info = proc.info
+                nome = info['name'].lower() if info['name'] else ''
+                
+                # Registra todos processos
+                todos_processos.append({
+                    'pid': info['pid'],
+                    'nome': info['name'],
+                    'cpu': info['cpu_percent'] or 0,
+                    'memoria': info['memory_percent'] or 0
+                })
+                
+                # Verifica nomes suspeitos
+                for padrao in self.processos_suspeitos:
+                    if padrao in nome:
+                        suspeitos.append({
+                            'pid': info['pid'],
+                            'nome': info['name'],
+                            'cpu': info['cpu_percent'] or 0,
+                            'memoria': info['memory_percent'] or 0,
+                            'razao': f'Nome contém "{padrao}"'
+                        })
+                        break
+                        
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                pass
+                
+        return {
+            'total_processos': len(todos_processos),
+            'suspeitos': suspeitos,
+            'todos': todos_processos
+        }
+    
+    def matar_processo(self, pid):
+        """Mata um processo suspeito (com confirmação)"""
+        try:
+            proc = psutil.Process(pid)
+            nome = proc.name()
+            
+            print(f"⚠️ Processo: {nome} (PID: {pid})")
+            confirmar = input("Deseja encerrar este processo? (s/n): ")
+            
+            if confirmar.lower() == 's':
+                proc.terminate()
+                return True, f"Processo {nome} encerrado"
+            else:
+                return False, "Operação cancelada"
+                
+        except Exception as e:
+            return False, f"Erro: {e}"
+Passo 5: Criar o módulo monitor_recursos.py
+python
+# modules/monitor_recursos.py
+import psutil
+import time
+from datetime import datetime
+import json
+
+class MonitorRecursos:
+    def __init__(self, config):
+        self.config = config
+        self.limite_cpu = config['configuracoes']['limite_cpu_alerta']
+        self.historico_cpu = []
+        self.historico_memoria = []
+        self.alertas = []
+        
+    def monitorar(self, duracao=30):
+        """Monitora recursos do sistema"""
+        print(f"\n📊 Monitorando sistema por {duracao} segundos...")
+        print(f"Limite de alerta: {self.limite_cpu}% CPU")
+        
+        self.historico_cpu = []
+        self.historico_memoria = []
+        
+        for i in range(duracao):
+            # Coleta dados
+            cpu = psutil.cpu_percent(interval=1)
+            memoria = psutil.virtual_memory().percent
+            
+            self.historico_cpu.append(cpu)
+            self.historico_memoria.append(memoria)
+            
+            # Verifica alertas
+            if cpu > self.limite_cpu:
+                alerta = {
+                    'timestamp': datetime.now().isoformat(),
+                    'tipo': 'CPU_ALTA',
+                    'valor': cpu,
+                    'limite': self.limite_cpu
+                }
+                self.alertas.append(alerta)
+                print(f"   ⚠️ ALERTA: CPU em {cpu}%")
+            
+            # Progresso
+            if i % 5 == 0:
+                print(f"   Progresso: {i}/{duracao} segundos")
+        
+        return self.analisar_dados()
+    
+    def analisar_dados(self):
+        """Analisa os dados coletados"""
+        if not self.historico_cpu:
+            return None
+            
+        media_cpu = sum(self.historico_cpu) / len(self.historico_cpu)
+        media_memoria = sum(self.historico_memoria) / len(self.historico_memoria)
+        max_cpu = max(self.historico_cpu)
+        picos = sum(1 for cpu in self.historico_cpu if cpu > self.limite_cpu)
+        
+        # Classifica o risco
+        if media_cpu > 80 or picos > len(self.historico_cpu) * 0.5:
+            risco = "CRÍTICO"
+        elif media_cpu > 60 or picos > len(self.historico_cpu) * 0.3:
+            risco = "ALTO"
+        elif media_cpu > 40 or picos > len(self.historico_cpu) * 0.1:
+            risco = "MÉDIO"
+        else:
+            risco = "BAIXO"
+        
+        return {
+            'media_cpu': round(media_cpu, 1),
+            'media_memoria': round(media_memoria, 1),
+            'max_cpu': max_cpu,
+            'picos': picos,
+            'total_amostras': len(self.historico_cpu),
+            'alertas': len(self.alertas),
+            'nivel_risco': risco,
+            'timestamp': datetime.now().isoformat()
+        }
+    
+    def monitoramento_continuo(self, intervalo=5):
+        """Monitoramento em tempo real"""
+        try:
+            while True:
+                cpu = psutil.cpu_percent(interval=1)
+                memoria = psutil.virtual_memory().percent
+                
+                # Mostra barra de progresso simples
+                barra_cpu = '█' * int(cpu / 5) + '░' * (20 - int(cpu / 5))
+                barra_mem = '█' * int(memoria / 5) + '░' * (20 - int(memoria / 5))
+                
+                print(f"\rCPU: [{barra_cpu}] {cpu:3.0f}% | MEM: [{barra_mem}] {memoria:3.0f}%", end='')
+                
+                time.sleep(intervalo - 1)  # Ajusta pelo 1 segundo do cpu_percent
+                
+        except KeyboardInterrupt:
+            print("\n\n✅ Monitoramento encerrado")
+Passo 6: Criar o módulo honeypot_simples.py
+python
+# modules/honeypot_simples.py
+import socket
+import threading
+from datetime import datetime
+import json
+
+class HoneypotSimples:
+    def __init__(self, config):
+        self.config = config
+        self.portas = config.get('portas_honeypot', [3333, 4444, 5555])
+        self.ataques = []
+        self.ativo = False
+        
+    def iniciar(self):
+        """Inicia o honeypot (apenas se configurado)"""
+        if not self.config['configuracoes']['modo_honeypot']:
+            print("🔒 Honeypot desativado na configuração")
+            return
+            
+        self.ativo = True
+        print("\n🍯 Iniciando Honeypot Educacional...")
+        
+        for porta in self.portas:
+            thread = threading.Thread(target=self._simular_servidor, args=(porta,))
+            thread.daemon = True
+            thread.start()
+            print(f"   ✅ Monitorando porta {porta}")
+    
+    def _simular_servidor(self, porta):
+        """Simula um servidor vulnerável"""
+        try:
+            servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            servidor.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            servidor.bind(('0.0.0.0', porta))
+            servidor.listen(5)
+            
+            while self.ativo:
+                try:
+                    cliente, endereco = servidor.accept()
+                    
+                    # Registra tentativa
+                    ataque = {
+                        'timestamp': datetime.now().isoformat(),
+                        'ip': endereco[0],
+                        'porta': porta,
+                        'tipo': 'conexao_detectada'
+                    }
+                    
+                    self.ataques.append(ataque)
+                    print(f"\n🚨 Tentativa de conexão detectada de {endereco[0]}:{porta}")
+                    
+                    cliente.close()
+                    
+                except:
+                    pass
+                    
+        except Exception as e:
+            if self.ativo:
+                print(f"   ⚠️ Erro na porta {porta}: {e}")
+    
+    def parar(self):
+        """Para o honeypot"""
+        self.ativo = False
+        print("🛑 Honeypot encerrado")
+    
+    def get_estatisticas(self):
+        """Retorna estatísticas do honeypot"""
+        ips_unicos = set(a['ip'] for a in self.ataques)
+        return {
+            'total_ataques': len(self.ataques),
+            'ips_unicos': len(ips_unicos),
+            'portas_atingidas': len(set(a['porta'] for a in self.ataques)),
+            'ultimos_ataques': self.ataques[-5:] if self.ataques else []
+        }
+Passo 7: Criar o módulo relatorios.py
+python
+# modules/relatorios.py
+from datetime import datetime
+import json
+import os
+from prettytable import PrettyTable
+
+class GeradorRelatorios:
+    def __init__(self):
+        self.relatorios_path = "logs"
+        if not os.path.exists(self.relatorios_path):
+            os.makedirs(self.relatorios_path)
+    
+    def salvar_log(self, dados, tipo="monitoramento"):
+        """Salva dados em arquivo JSON"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        nome_arquivo = f"{self.relatorios_path}/{tipo}_{timestamp}.json"
+        
+        with open(nome_arquivo, 'w', encoding='utf-8') as f:
+            json.dump(dados, f, indent=2, ensure_ascii=False)
+        
+        return nome_arquivo
+    
+    def gerar_relatorio_texto(self, dados_monitoramento, processos_suspeitos, estatisticas_honeypot=None):
+        """Gera relatório formatado"""
+        relatorio = []
+        
+        # Cabeçalho
+        relatorio.append("="*60)
+        relatorio.append("RELATÓRIO DO SENTINELA".center(60))
+        relatorio.append(f"Data: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}".center(60))
+        relatorio.append("="*60)
+        
+        # Resumo do Monitoramento
+        if dados_monitoramento:
+            relatorio.append("\n📊 RESUMO DO MONITORAMENTO:")
+            relatorio.append(f"   • CPU Média: {dados_monitoramento['media_cpu']}%")
+            relatorio.append(f"   • Memória Média: {dados_monitoramento['media_memoria']}%")
+            relatorio.append(f"   • Pico de CPU: {dados_monitoramento['max_cpu']}%")
+            relatorio.append(f"   • Alertas Gerados: {dados_monitoramento['alertas']}")
+            relatorio.append(f"   • Nível de Risco: {dados_monitoramento['nivel_risco']}")
+        
+        # Processos Suspeitos
+        if processos_suspeitos:
+            relatorio.append("\n🚨 PROCESSOS SUSPEITOS ENCONTRADOS:")
+            for p in processos_suspeitos:
+                relatorio.append(f"   • {p['nome']} (PID: {p['pid']}) - CPU: {p['cpu']}%")
+                relatorio.append(f"     Razão: {p['razao']}")
+        else:
+            relatorio.append("\n✅ Nenhum processo suspeito encontrado")
+        
+        # Honeypot
+        if estatisticas_honeypot:
+            relatorio.append("\n🍯 ESTATÍSTICAS DO HONEYPOT:")
+            relatorio.append(f"   • Total de tentativas: {estatisticas_honeypot['total_ataques']}")
+            relatorio.append(f"   • IPs únicos: {estatisticas_honeypot['ips_unicos']}")
+        
+        # Recomendações
+        relatorio.append("\n🛡️ RECOMENDAÇÕES DE SEGURANÇA:")
+        relatorio.append("   1. Mantenha o Windows e antivírus atualizados")
+        relatorio.append("   2. Use uBlock Origin no navegador")
+        relatorio.append("   3. Evite sites desconhecidos")
+        relatorio.append("   4. Monitore uso de CPU regularmente")
+        relatorio.append("   5. Desconfie de emails com anexos")
+        
+        relatorio.append("\n" + "="*60)
+        
+        return "\n".join(relatorio)
+    
+    def listar_logs_anteriores(self):
+        """Lista logs salvos"""
+        if not os.path.exists(self.relatorios_path):
+            return []
+        
+        arquivos = os.listdir(self.relatorios_path)
+        logs = [f for f in arquivos if f.endswith('.json')]
+        return sorted(logs, reverse=True)
+    
+    def carregar_log(self, nome_arquivo):
+        """Carrega um log específico"""
+        caminho = os.path.join(self.relatorios_path, nome_arquivo)
+        if os.path.exists(caminho):
+            with open(caminho, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return None
+Passo 8: Criar o main.py (Programa Principal)
+python
+# main.py
+import json
+import os
+import sys
+from datetime import datetime
+
+# Importando nossos módulos
+from modules.detector_processos import DetectorProcessos
+from modules.monitor_recursos import MonitorRecursos
+from modules.honeypot_simples import HoneypotSimples
+from modules.relatorios import GeradorRelatorios
+
+# Tenta importar colorama para cores (opcional)
+try:
+    from colorama import init, Fore, Style
+    init()
+    CORES = True
+except ImportError:
+    CORES = False
+    # Cria classes dummy se colorama não estiver instalado
+    class Fore:
+        RED = GREEN = YELLOW = CYAN = MAGENTA = RESET = ''
+    class Style:
+        BRIGHT = RESET_ALL = ''
+
+class Sentinela:
+    def __init__(self):
+        self.config = self.carregar_config()
+        self.relatorios = GeradorRelatorios()
+        
+        # Inicializa módulos
+        self.detector = DetectorProcessos(self.config)
+        self.monitor = MonitorRecursos(self.config)
+        self.honeypot = HoneypotSimples(self.config)
+        
+        self.running = True
+        
+    def carregar_config(self):
+        """Carrega configurações do arquivo JSON"""
+        config_padrao = {
+            "configuracoes": {
+                "nome_sistema": "Sentinela - Sistema de Defesa",
+                "versao": "1.0.0",
+                "autor": "Usuário",
+                "limite_cpu_alerta": 70,
+                "intervalo_monitoramento": 5,
+                "salvar_logs": True,
+                "modo_honeypot": False
+            },
+            "processos_suspeitos": [
+                "miner", "xmr", "coin", "crypto", "pool",
+                "hash", "cpuminer", "xmrig", "minerd"
+            ],
+            "portas_honeypot": [3333, 4444, 5555, 8080]
+        }
+        
+        try:
+            if os.path.exists('config.json'):
+                with open('config.json', 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            else:
+                # Cria config padrão
+                with open('config.json', 'w', encoding='utf-8') as f:
+                    json.dump(config_padrao, f, indent=2, ensure_ascii=False)
+                return config_padrao
+        except Exception as e:
+            print(f"Erro ao carregar config: {e}")
+            return config_padrao
+    
+    def limpar_tela(self):
+        """Limpa a tela do terminal"""
+        os.system('cls' if os.name == 'nt' else 'clear')
+    
+    def mostrar_banner(self):
+        """Mostra banner do programa"""
+        banner = f"""
+{Fore.CYAN}{Style.BRIGHT}
+╔══════════════════════════════════════════════════════════╗
+║                    S E N T I N E L A                     ║
+║                Sistema de Defesa Cibernética             ║
+║                     v{self.config['configuracoes']['versao']} - Educacional                ║
+╚══════════════════════════════════════════════════════════╝
+{Style.RESET_ALL}
+        """
+        print(banner)
+    
+    def mostrar_menu(self):
+        """Mostra menu principal"""
+        print(f"\n{Fore.GREEN}MENU PRINCIPAL:{Style.RESET_ALL}")
+        print("="*50)
+        print("1. 🔍 Escanear Processos Suspeitos")
+        print("2. 📊 Monitorar Recursos (30s)")
+        print("3. ⏱️  Monitoramento Contínuo (Ctrl+C para parar)")
+        print("4. 🚀 Análise Completa Rápida")
+        print("5. 📋 Ver Logs Anteriores")
+        print("6. ⚙️  Configurações")
+        print("7. 🍯 Ativar/Desativar Honeypot")
+        print("8. ❓ Ajuda/Sobre")
+        print("0. 👋 Sair")
+        print("="*50)
+    
+    def opcao_escanear(self):
+        """Opção 1: Escanear processos"""
+        self.limpar_tela()
+        print(f"\n{Fore.CYAN}🔍 ESCANEANDO PROCESSOS...{Style.RESET_ALL}")
+        
+        resultado = self.detector.escanear()
+        
+        print(f"\nTotal de processos: {resultado['total_processos']}")
+        
+        if resultado['suspeitos']:
+            print(f"\n{Fore.RED}🚨 PROCESSOS SUSPEITOS ENCONTRADOS:{Style.RESET_ALL}")
+            for i, proc in enumerate(resultado['suspeitos'], 1):
+                print(f"\n{i}. {Fore.YELLOW}{proc['nome']}{Style.RESET_ALL}")
+                print(f"   PID: {proc['pid']}")
+                print(f"   CPU: {proc['cpu']:.1f}%")
+                print(f"   Memória: {proc['memoria']:.1f}%")
+                print(f"   Razão: {proc['razao']}")
+                
+                # Pergunta se quer matar
+                if i == 1:  # Pergunta apenas no primeiro
+                    matar = input(f"\n{Fore.RED}Deseja encerrar algum processo? (s/n): {Style.RESET_ALL}")
+                    if matar.lower() == 's':
+                        pid = input("Digite o PID: ")
+                        sucesso, msg = self.detector.matar_processo(int(pid))
+                        print(msg)
+        else:
+            print(f"\n{Fore.GREEN}✅ Nenhum processo suspeito encontrado{Style.RESET_ALL}")
+        
+        input(f"\n{Fore.CYAN}Pressione Enter para continuar...{Style.RESET_ALL}")
+    
+    def opcao_monitorar(self):
+        """Opção 2: Monitorar por 30s"""
+        self.limpar_tela()
+        print(f"\n{Fore.CYAN}📊 INICIANDO MONITORAMENTO (30 segundos)...{Style.RESET_ALL}")
+        
+        resultado = self.monitor.monitorar(30)
+        
+        print(f"\n{Fore.GREEN}RESULTADOS:{Style.RESET_ALL}")
+        print(f"   CPU Média: {resultado['media_cpu']}%")
+        print(f"   Memória Média: {resultado['media_memoria']}%")
+        print(f"   Pico de CPU: {resultado['max_cpu']}%")
+        print(f"   Alertas: {resultado['alertas']}")
+        print(f"   Nível de Risco: {resultado['nivel_risco']}")
+        
+        # Salva log
+        if self.config['configuracoes']['salvar_logs']:
+            arquivo = self.relatorios.salvar_log(resultado, "monitoramento")
+            print(f"\n📁 Log salvo em: {arquivo}")
+        
+        input(f"\n{Fore.CYAN}Pressione Enter para continuar...{Style.RESET_ALL}")
+    
+    def opcao_continua(self):
+        """Opção 3: Monitoramento contínuo"""
+        self.limpar_tela()
+        print(f"\n{Fore.CYAN}⏱️  MONITORAMENTO CONTÍNUO{Style.RESET_ALL}")
+        print("Pressione Ctrl+C para parar\n")
+        
+        self.monitor.monitoramento_continuo(5)
+    
+    def opcao_analise_completa(self):
+        """Opção 4: Análise completa rápida"""
+        self.limpar_tela()
+        print(f"\n{Fore.MAGENTA}🚀 INICIANDO ANÁLISE COMPLETA...{Style.RESET_ALL}")
+        
+        # 1. Escaneia processos
+        print("\n1. Verificando processos...")
+        processos = self.detector.escanear()
+        
+        # 2. Monitora por 15 segundos
+        print("2. Monitorando recursos...")
+        monitor = self.monitor.monitorar(15)
+        
+        # 3. Gera relatório
+        print("3. Gerando relatório...")
+        estatisticas = self.honeypot.get_estatisticas() if self.config['configuracoes']['modo_honeypot'] else None
+        
+        relatorio = self.relatorios.gerar_relatorio_texto(
+            monitor, 
+            processos['suspeitos'],
+            estatisticas
+        )
+        
+        print("\n" + "="*60)
+        print(relatorio)
+        
+        # Salva relatório
+        if self.config['configuracoes']['salvar_logs']:
+            dados_completos = {
+                'processos': processos,
+                'monitoramento': monitor,
+                'honeypot': estatisticas
+            }
+            arquivo = self.relatorios.salvar_log(dados_completos, "analise_completa")
+            print(f"\n📁 Relatório salvo em: {arquivo}")
+        
+        input(f"\n{Fore.CYAN}Pressione Enter para continuar...{Style.RESET_ALL}")
+    
+    def opcao_logs(self):
+        """Opção 5: Ver logs anteriores"""
+        self.limpar_tela()
+        print(f"\n{Fore.CYAN}📋 LOGS ANTERIORES{Style.RESET_ALL}")
+        
+        logs = self.relatorios.listar_logs_anteriores()
+        
+        if not logs:
+            print("\nNenhum log encontrado.")
+            input(f"\n{Fore.CYAN}Pressione Enter para continuar...{Style.RESET_ALL}")
+            return
+        
+        print(f"\nLogs disponíveis:")
+        for i, log in enumerate(logs[:10], 1):  # Mostra últimos 10
+            print(f"{i}. {log}")
+        
+        escolha = input("\nDigite o número do log para ver (Enter para voltar): ")
+        
+        if escolha.isdigit():
+            idx = int(escolha) - 1
+            if 0 <= idx < len(logs):
+                dados = self.relatorios.carregar_log(logs[idx])
+                if dados:
+                    print(f"\n{Fore.YELLOW}CONTEÚDO DO LOG:{Style.RESET_ALL}")
+                    print(json.dumps(dados, indent=2, ensure_ascii=False)[:1000])  # Mostra primeiros 1000 chars
+        
+        input(f"\n{Fore.CYAN}Pressione Enter para continuar...{Style.RESET_ALL}")
+    
+    def opcao_config(self):
+        """Opção 6: Configurações"""
+        self.limpar_tela()
+        print(f"\n{Fore.CYAN}⚙️  CONFIGURAÇÕES{Style.RESET_ALL}")
+        
+        print(f"\nConfigurações atuais:")
+        for chave, valor in self.config['configuracoes'].items():
+            print(f"   {chave}: {valor}")
+        
+        print(f"\nProcessos suspeitos monitorados:")
+        for p in self.config['processos_suspeitos'][:5]:
+            print(f"   • {p}")
+        
+        alterar = input(f"\n{Fore.YELLOW}Deseja alterar o limite de CPU? (s/n): {Style.RESET_ALL}")
+        
+        if alterar.lower() == 's':
+            novo_limite = input("Novo limite (%): ")
+            try:
+                self.config['configuracoes']['limite_cpu_alerta'] = int(novo_limite)
+                self.monitor.limite_cpu = int(novo_limite)
+                
+                # Salva config
+                with open('config.json', 'w', encoding='utf-8') as f:
+                    json.dump(self.config, f, indent=2, ensure_ascii=False)
+                
+                print(f"{Fore.GREEN}Configuração atualizada!{Style.RESET_ALL}")
+            except:
+                print(f"{Fore.RED}Valor inválido{Style.RESET_ALL}")
+        
+        input(f"\n{Fore.CYAN}Pressione Enter para continuar...{Style.RESET_ALL}")
+    
+    def opcao_honeypot(self):
+        """Opção 7: Ativar/Desativar Honeypot"""
+        self.limpar_tela()
+        print(f"\n{Fore.CYAN}🍯 HONEYPOT{Style.RESET_ALL}")
+        
+        estado_atual = self.config['configuracoes']['modo_honeypot']
+        print(f"Status atual: {'ATIVADO' if estado_atual else 'DESATIVADO'}")
+        
+        print(f"\n{Fore.YELLOW}ATENÇÃO: Honeypot atrai conexões para estudo.{Style.RESET_ALL}")
+        print("Use apenas em sua própria rede!")
+        
+        if not estado_atual:
+            ativar = input("Ativar honeypot? (s/n): ")
+            if ativar.lower() == 's':
+                self.config['configuracoes']['modo_honeypot'] = True
+                self.honeypot = HoneypotSimples(self.config)
+                self.honeypot.iniciar()
+                
+                # Salva config
+                with open('config.json', 'w', encoding='utf-8') as f:
+                    json.dump(self.config, f, indent=2, ensure_ascii=False)
+        else:
+            desativar = input("Desativar honeypot? (s/n): ")
+            if desativar.lower() == 's':
+                self.config['configuracoes']['modo_honeypot'] = False
+                self.honeypot.parar()
+                
+                # Salva config
+                with open('config.json', 'w', encoding='utf-8') as f:
+                    json.dump(self.config, f, indent=2, ensure_ascii=False)
+        
+        input(f"\n{Fore.CYAN}Pressione Enter para continuar...{Style.RESET_ALL}")
+    
+    def opcao_ajuda(self):
+        """Opção 8: Ajuda"""
+        self.limpar_tela()
+        print(f"\n{Fore.CYAN}❓ AJUDA E SOBRE{Style.RESET_ALL}")
+        print("="*60)
+        print(f"\n{Fore.GREEN}SENTINELA - Sistema de Defesa Cibernética{Style.RESET_ALL}")
+        print(f"Versão: {self.config['configuracoes']['versao']}")
+        print(f"\n{Fore.YELLOW}O que este programa faz?{Style.RESET_ALL}")
+        print("   • Detecta processos suspeitos de mineração")
+        print("   • Monitora uso de CPU e memória")
+        print("   • Gera alertas de atividade anormal")
+        print("   • Salva logs para análise posterior")
+        print("   • Simula servidores vulneráveis (honeypot)")
+        
+        print(f"\n{Fore.YELLOW}Como usar:{Style.RESET_ALL}")
+        print("   1. Comece com uma análise completa (opção 4)")
+        print("   2. Monitore processos suspeitos regularmente")
+        print("   3. Verifique os logs para padrões")
+        print("   4. Ajuste as configurações conforme necessário")
+        
+        print(f"\n{Fore.YELLOW}Aviso Legal:{Style.RESET_ALL}")
+        print("   Este programa é EDUCACIONAL. Use apenas")
+        print("   em seus próprios sistemas para aprendizado.")
+        
+        print(f"\n{Fore.GREEN}Bons estudos! 🚀{Style.RESET_ALL}")
+        input(f"\n{Fore.CYAN}Pressione Enter para continuar...{Style.RESET_ALL}")
+    
+    def executar(self):
+        """Loop principal do programa"""
+        try:
+            # Inicia honeypot se configurado
+            if self.config['configuracoes']['modo_honeypot']:
+                self.honeypot.iniciar()
+            
+            while self.running:
+                self.limpar_tela()
+                self.mostrar_banner()
+                self.mostrar_menu()
+                
+                opcao = input(f"\n{Fore.GREEN}Escolha uma opção: {Style.RESET_ALL}")
+                
+                if opcao == '1':
+                    self.opcao_escanear()
+                elif opcao == '2':
+                    self.opcao_monitorar()
+                elif opcao == '3':
+                    self.opcao_continua()
+                elif opcao == '4':
+                    self.opcao_analise_completa()
+                elif opcao == '5':
+                    self.opcao_logs()
+                elif opcao == '6':
+                    self.opcao_config()
+                elif opcao == '7':
+                    self.opcao_honeypot()
+                elif opcao == '8':
+                    self.opcao_ajuda()
+                elif opcao == '0':
+                    print(f"\n{Fore.YELLOW}Encerrando Sentinela...{Style.RESET_ALL}")
+                    if self.config['configuracoes']['modo_honeypot']:
+                        self.honeypot.parar()
+                    self.running = False
+                else:
+                    print(f"{Fore.RED}Opção inválida!{Style.RESET_ALL}")
+                    input("Pressione Enter para continuar...")
+                    
+        except KeyboardInterrupt:
+            print(f"\n\n{Fore.YELLOW}Programa interrompido pelo usuário{Style.RESET_ALL}")
+            if self.config['configuracoes']['modo_honeypot']:
+                self.honeypot.parar()
+
+# Ponto de entrada do programa
+if __name__ == "__main__":
+    sentinela = Sentinela()
+    sentinela.executar()
+Passo 9: Criar o README.md
+markdown
+# 🛡️ SENTINELA - Sistema de Defesa Cibernética
+
+Um sistema educacional para detecção de cryptojacking e monitoramento de segurança.
+
+## 📋 Sobre o Projeto
+
+O Sentinela é uma ferramenta **educacional** que ajuda a entender e detectar atividades suspeitas de mineração de criptomoedas (cryptojacking) em seu computador.
+
+**⚠️ IMPORTANTE**: Este software é para fins EDUCACIONAIS. Use apenas em seus próprios sistemas.
+
+## ✨ Funcionalidades
+
+- 🔍 **Detecção de Processos**: Identifica processos suspeitos de mineração
+- 📊 **Monitoramento de Recursos**: Acompanha uso de CPU e memória em tempo real
+- 🚨 **Sistema de Alertas**: Notifica quando atividades anormais são detectadas
+- 📝 **Geração de Logs**: Salva relatórios para análise posterior
+- 🍯 **Honeypot Simples**: Simula servidores vulneráveis para estudo (opcional)
+
+## 🚀 Como Instalar
+
+### Pré-requisitos
+- Windows 10/11
+- Python 3.7 ou superior
+- Git (para clonar o repositório)
+
+### Passo a Passo
+
+1. **Clone o repositório**
+   ```bash
+   git clone https://github.com/seu-usuario/sentinela-defesa.git
+   cd sentinela-defesa
+Instale as dependências
+
+bash
+pip install -r requirements.txt
+Execute o programa
+
+bash
+python main.py
+
+
+📖 Como Usar (continuação)
+Opções principais:
+
+Opção 1: Escaneia processos suspeitos agora
+
+Opção 2: Monitora recursos por 30 segundos
+
+Opção 3: Monitoramento em tempo real (aperte Ctrl+C para parar)
+
+Opção 4: Faz uma análise completa rápida (recomendado para começar)
+
+Opção 5: Ver logs de análises anteriores
+
+Opção 6: Ajustar configurações (limite de CPU, etc)
+
+Opção 7: Ativar/desativar modo honeypot (aprendizado avançado)
+
+Opção 8: Ajuda e informações
+
+Para sua primeira análise:
+
+Escolha a opção 4 (Análise Completa)
+
+Aguarde 15 segundos enquanto o sistema coleta dados
+
+Leia o relatório gerado
+
+Verifique se há processos suspeitos
+
+🎯 Exemplo de Uso Prático
+bash
+# No terminal, dentro da pasta do projeto
+python main.py
+
+# Você verá:
+╔══════════════════════════════════════════════════════════╗
+║                    S E N T I N E L A                     ║
+║                Sistema de Defesa Cibernética             ║
+║                     v1.0.0 - Educacional                ║
+╚══════════════════════════════════════════════════════════╝
+
+MENU PRINCIPAL:
+==================================================
+1. 🔍 Escanear Processos Suspeitos
+2. 📊 Monitorar Recursos (30s)
+3. ⏱️  Monitoramento Contínuo
+4. 🚀 Análise Completa Rápida
+5. 📋 Ver Logs Anteriores
+6. ⚙️  Configurações
+7. 🍯 Ativar/Desativar Honeypot
+8. ❓ Ajuda/Sobre
+0. 👋 Sair
+==================================================
+
+Escolha uma opção: 4
+📁 ESTRUTURA DE ARQUIVOS (Resumo)
+text
+SentinelaDefesa/
+├── main.py                    # Programa principal (juntei tudo aqui!)
+├── config.json                # Suas configurações
+├── requirements.txt           # Dependências
+├── README.md                  # Este arquivo
+└── logs/                      # Pasta com seus relatórios
+    ├── monitoramento_20240101_120000.json
+    ├── analise_completa_20240101_121500.json
+    └── ...
+🚀 PASSO A PASSO NO GITHUB DESKTOP
+1. Criar o repositório no GitHub
+Acesse https://github.com
+
+Clique no botão verde "New" (ou "+" no canto superior)
+
+Preencha:
+
+Repository name: sentinela-defesa
+
+Description: "Sistema educacional para detecção de cryptojacking"
+
+Deixe como Public (para mostrar no portfólio)
+
+Não inicializar com README (já vamos criar)
+
+Clique em "Create repository"
+
+2. Configurar no GitHub Desktop
+Abra o GitHub Desktop
+
+Vá em File → Clone Repository
+
+Escolha a aba URL e cole:
+
+text
+https://github.com/SEU-USUARIO/sentinela-defesa.git
+Escolha onde salvar (ex: C:\Users\SeuNome\Documents\GitHub\sentinela-defesa)
+
+Clique em Clone
+
+3. Copiar os arquivos para a pasta
+Abra o Explorer do Windows
+
+Navegue até a pasta que você clonou
+
+Copie todos os arquivos que criamos para dentro dela:
+
+main.py
+
+config.json
+
+requirements.txt
+
+README.md
+
+Pasta modules/ (se criou separado)
+
+Pasta logs/ (vazia por enquanto)
+
+4. Commit e Push no GitHub Desktop
+No GitHub Desktop você verá:
+
+text
+Changes (X files)
+📁 SentinelaDefesa/
+   ├── main.py
+   ├── config.json
+   ├── requirements.txt
+   ├── README.md
+   └── modules/
+       ├── __init__.py
+       ├── detector_processos.py
+       ├── monitor_recursos.py
+       ├── honeypot_simples.py
+       └── relatorios.py
+No canto inferior esquerdo, escreva uma mensagem de commit:
+
+text
+Primeira versão do Sentinela - Sistema de defesa educacional
+Clique no botão azul "Commit to main"
+
+Clique em "Push origin" (seta para cima)
+
+5. Verificar no GitHub
+Acesse seu repositório no navegador
+
+Seus arquivos já devem estar lá! 🎉
+
+💻 COMO USAR NO VSCODE
+Abrir o projeto:
+Abra o VSCode
+
+File → Open Folder
+
+Navegue até C:\Users\SeuNome\Documents\GitHub\sentinela-defesa
+
+Clique em Select Folder
+
+Instalar dependências:
+No terminal do VSCode (Ctrl + '):
+
+bash
+pip install -r requirements.txt
+Executar o programa:
+bash
+python main.py
+Atalhos úteis no VSCode:
+Ctrl + S - Salvar arquivo
+
+Ctrl + ' - Abrir/fechar terminal
+
+F5 - Executar com debug
+
+Ctrl + Shift + P - Comandos do VSCode
+
+🎨 PERSONALIZE O PROJETO
+Para deixar com sua cara:
+Mude o nome do autor no config.json:
+
+json
+{
+    "configuracoes": {
+        "autor": "SEU NOME AQUI",
+        ...
+    }
+}
+Adicione um ícone (opcional):
+
+Crie uma pasta assets/
+
+Adicione uma imagem icon.png
+
+Modifique o banner no main.py
+
+Crie seu próprio README mais detalhado:
+
+Adicione screenshots
+
+Explique sua jornada de aprendizado
+
+Coloque badges de tecnologias
+
+📤 COMPARTILHANDO SEU PROJETO
+No LinkedIn:
+text
+🚀 Acabei de criar meu primeiro projeto de segurança cibernética!
+
+Desenvolvi o "Sentinela" - um sistema educacional que detecta 
+tentativas de cryptojacking (mineração maliciosa) em computadores.
+
+🛡️ Funcionalidades:
+- Detecção de processos suspeitos
+- Monitoramento de CPU em tempo real
+- Sistema de alertas
+- Geração de relatórios
+
+🔧 Tecnologias: Python, psutil, GitHub
+📚 Aprendizado: Segurança da informação, detecção de ameaças
+
+#CyberSecurity #Python #Infosec #LearningByDoing
+No GitHub:
+Adicione no seu README.md:
+
+markdown
+## 🏆 Conquistas com este projeto
+- ✅ Primeiro projeto de segurança no GitHub
+- ✅ Aprendi sobre detecção de cryptojacking
+- ✅ Pratiquei Python e bibliotecas de sistema
+- ✅ Entendi como defender sistemas reais
+🎓 PRÓXIMOS PASSOS DE APRENDIZADO
+Agora que você tem seu projeto, pode evoluir:
+
+Adicionar novas features:
+
+python
+# Sugestões de melhoria
+- Enviar alertas por email
+- Interface gráfica (Tkinter)
+- Bloquear automaticamente processos suspeitos
+- Relatórios em PDF
+Estudar mais sobre:
+
+Assinaturas de malware
+
+Análise de comportamento
+
+Machine learning para detecção
+
+Forense computacional
+
+Certificações para o futuro:
+
+CompTIA Security+
+
+Certified Ethical Hacker (CEH)
+
+Cisco CyberOps
+
+⚠️ LEMBRETES IMPORTANTES
+Sempre:
+✅ Use para APRENDER
+
+✅ Teste em SEU computador
+
+✅ Compartilhe conhecimento
+
+✅ Ajude outros a se protegerem
+
+Nunca:
+❌ Use em computadores de outros sem permissão
+
+❌ Tente explorar vulnerabilidades
+
+❌ Compartilhe como ferramenta de ataque
+
+❌ Esqueça que é para defesa, não ataque
+
+🆘 SOLUÇÃO DE PROBLEMAS COMUNS
+Erro: "psutil not found"
+bash
+pip install psutil
+Erro: "colorama not found"
+bash
+pip install colorama
+Programa não abre:
+bash
+python --version  # Precisa ser Python 3.7+
+Permissão negada:
+Execute o VSCode como Administrador
+
+Ou use outro diretório (não em Program Files)
+
+🏁 CONCLUSÃO
+Parabéns! 🎉 Você agora tem:
+
+✅ Um projeto Python completo no GitHub
+
+✅ Uma ferramenta educacional de segurança
+
+✅ Código organizado e documentado
+
+✅ Experiência prática com detecção de ameaças
+
+✅ Algo para mostrar no seu portfólio
+
+Lembre-se: O conhecimento em segurança é uma responsabilidade. Use-o para proteger, não para atacar.
