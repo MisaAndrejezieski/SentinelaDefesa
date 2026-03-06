@@ -1,0 +1,1041 @@
+{
+  "processos": {
+    "total_processos": 169,
+    "suspeitos": [
+      {
+        "pid": 2992,
+        "nome": "spoolsv.exe",
+        "cpu": 0,
+        "memoria": 0.08224676921089007,
+        "razao": "Nome contém \"pool\""
+      }
+    ],
+    "todos": [
+      {
+        "pid": 0,
+        "nome": "System Idle Process",
+        "cpu": 788.8,
+        "memoria": 4.2504790289865665e-05
+      },
+      {
+        "pid": 4,
+        "nome": "System",
+        "cpu": 0,
+        "memoria": 0.006056932616305858
+      },
+      {
+        "pid": 88,
+        "nome": "audiodg.exe",
+        "cpu": 0,
+        "memoria": 0.05202586331479557
+      },
+      {
+        "pid": 124,
+        "nome": "Registry",
+        "cpu": 0,
+        "memoria": 0.08403197040306443
+      },
+      {
+        "pid": 444,
+        "nome": "smss.exe",
+        "cpu": 0,
+        "memoria": 0.00637571854347985
+      },
+      {
+        "pid": 584,
+        "nome": "csrss.exe",
+        "cpu": 0,
+        "memoria": 0.029562081646601575
+      },
+      {
+        "pid": 688,
+        "nome": "svchost.exe",
+        "cpu": 0.1,
+        "memoria": 0.0724281626539311
+      },
+      {
+        "pid": 696,
+        "nome": "wininit.exe",
+        "cpu": 0,
+        "memoria": 0.03876436874435749
+      },
+      {
+        "pid": 704,
+        "nome": "csrss.exe",
+        "cpu": 0,
+        "memoria": 0.031389787629065795
+      },
+      {
+        "pid": 764,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.05574503246515882
+      },
+      {
+        "pid": 768,
+        "nome": "services.exe",
+        "cpu": 0.1,
+        "memoria": 0.05372605492639021
+      },
+      {
+        "pid": 804,
+        "nome": "winlogon.exe",
+        "cpu": 0,
+        "memoria": 0.061589441130015354
+      },
+      {
+        "pid": 824,
+        "nome": "lsass.exe",
+        "cpu": 0,
+        "memoria": 0.12145743825329115
+      },
+      {
+        "pid": 984,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.13448515647713497
+      },
+      {
+        "pid": 1004,
+        "nome": "fontdrvhost.exe",
+        "cpu": 0,
+        "memoria": 0.022017481370150416
+      },
+      {
+        "pid": 1012,
+        "nome": "fontdrvhost.exe",
+        "cpu": 0,
+        "memoria": 0.027033046624354566
+      },
+      {
+        "pid": 1088,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.030348420266964087
+      },
+      {
+        "pid": 1132,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.05338601660407128
+      },
+      {
+        "pid": 1140,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.04480004896551841
+      },
+      {
+        "pid": 1196,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.03621408132696555
+      },
+      {
+        "pid": 1232,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.10981112571386796
+      },
+      {
+        "pid": 1288,
+        "nome": "dwm.exe",
+        "cpu": 0.2,
+        "memoria": 0.2611919363312245
+      },
+      {
+        "pid": 1332,
+        "nome": "conhost.exe",
+        "cpu": 0,
+        "memoria": 0.05937919203494234
+      },
+      {
+        "pid": 1352,
+        "nome": "nvxdsync.exe",
+        "cpu": 0,
+        "memoria": 0.10853598200517198
+      },
+      {
+        "pid": 1376,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.06303460399987079
+      },
+      {
+        "pid": 1396,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.04171845166950315
+      },
+      {
+        "pid": 1404,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.045416368424721465
+      },
+      {
+        "pid": 1428,
+        "nome": "conhost.exe",
+        "cpu": 0,
+        "memoria": 0.05880537736602915
+      },
+      {
+        "pid": 1500,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.04273856663645993
+      },
+      {
+        "pid": 1564,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.08231052639632487
+      },
+      {
+        "pid": 1580,
+        "nome": "nvvsvc.exe",
+        "cpu": 0,
+        "memoria": 0.053343511813781413
+      },
+      {
+        "pid": 1664,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.0754672551596565
+      },
+      {
+        "pid": 1672,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.061759460291174816
+      },
+      {
+        "pid": 1720,
+        "nome": "nvvsvc.exe",
+        "cpu": 0,
+        "memoria": 0.07782627102074403
+      },
+      {
+        "pid": 1748,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.03313248403095029
+      },
+      {
+        "pid": 1760,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.04220725675783661
+      },
+      {
+        "pid": 1768,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.07043043751030742
+      },
+      {
+        "pid": 1840,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.05189834894392598
+      },
+      {
+        "pid": 1904,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.034067589417327335
+      },
+      {
+        "pid": 1980,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.054129850434143936
+      },
+      {
+        "pid": 2020,
+        "nome": "MemCompression",
+        "cpu": 0,
+        "memoria": 0
+      },
+      {
+        "pid": 2040,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.04499132052182281
+      },
+      {
+        "pid": 2092,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.04386494357914137
+      },
+      {
+        "pid": 2104,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.0383818256317487
+      },
+      {
+        "pid": 2336,
+        "nome": "GitHubDesktop.exe",
+        "cpu": 0,
+        "memoria": 0.25235093995093244
+      },
+      {
+        "pid": 2344,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.039635716945299736
+      },
+      {
+        "pid": 2368,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.041038375024865306
+      },
+      {
+        "pid": 2452,
+        "nome": "Code.exe",
+        "cpu": 0,
+        "memoria": 0.15996677825590944
+      },
+      {
+        "pid": 2492,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.04386494357914137
+      },
+      {
+        "pid": 2532,
+        "nome": "WmiPrvSE.exe",
+        "cpu": 0,
+        "memoria": 0.05019815733233135
+      },
+      {
+        "pid": 2540,
+        "nome": "conhost.exe",
+        "cpu": 0,
+        "memoria": 0.05912416329320315
+      },
+      {
+        "pid": 2584,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.044353748667474824
+      },
+      {
+        "pid": 2676,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.06887901266472732
+      },
+      {
+        "pid": 2792,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.09563577815219776
+      },
+      {
+        "pid": 2816,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.03634159569783515
+      },
+      {
+        "pid": 2824,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.051877096548781046
+      },
+      {
+        "pid": 2868,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.06885776026958237
+      },
+      {
+        "pid": 2896,
+        "nome": "Code.exe",
+        "cpu": 1.7,
+        "memoria": 0.706875914915611
+      },
+      {
+        "pid": 2988,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.1789026623300446
+      },
+      {
+        "pid": 2992,
+        "nome": "spoolsv.exe",
+        "cpu": 0,
+        "memoria": 0.08224676921089007
+      },
+      {
+        "pid": 3056,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.099673733229735
+      },
+      {
+        "pid": 3152,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.11554927240299982
+      },
+      {
+        "pid": 3180,
+        "nome": "svchost.exe",
+        "cpu": 0.7,
+        "memoria": 0.09865361826277821
+      },
+      {
+        "pid": 3188,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.09272420001734195
+      },
+      {
+        "pid": 3196,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.032112369063993514
+      },
+      {
+        "pid": 3204,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.04743534596349008
+      },
+      {
+        "pid": 3212,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.037170439108487524
+      },
+      {
+        "pid": 3224,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.2373467489786099
+      },
+      {
+        "pid": 3232,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.09684716467545892
+      },
+      {
+        "pid": 3236,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.09465816797553084
+      },
+      {
+        "pid": 3244,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.07474467372472877
+      },
+      {
+        "pid": 3288,
+        "nome": "MsMpEng.exe",
+        "cpu": 1.1,
+        "memoria": 1.9084863364101134
+      },
+      {
+        "pid": 3296,
+        "nome": "MpDefenderCoreService.exe",
+        "cpu": 0,
+        "memoria": 0.11185135564778151
+      },
+      {
+        "pid": 3432,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.041973480411242346
+      },
+      {
+        "pid": 3524,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.05912416329320315
+      },
+      {
+        "pid": 3560,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.031007244516457002
+      },
+      {
+        "pid": 3580,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.05002813817117189
+      },
+      {
+        "pid": 3684,
+        "nome": "Code.exe",
+        "cpu": 0.7,
+        "memoria": 0.4062182808002462
+      },
+      {
+        "pid": 3696,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.074043344684946
+      },
+      {
+        "pid": 3784,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.03264367894261683
+      },
+      {
+        "pid": 4176,
+        "nome": "taskhostw.exe",
+        "cpu": 0,
+        "memoria": 0.028605723865079594
+      },
+      {
+        "pid": 4248,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.17018918032062214
+      },
+      {
+        "pid": 4284,
+        "nome": "python.exe",
+        "cpu": 0,
+        "memoria": 0.017830759526598648
+      },
+      {
+        "pid": 4296,
+        "nome": "cmd.exe",
+        "cpu": 0,
+        "memoria": 0.027734375664137348
+      },
+      {
+        "pid": 4316,
+        "nome": "sihost.exe",
+        "cpu": 0,
+        "memoria": 0.14579143069423922
+      },
+      {
+        "pid": 4384,
+        "nome": "msedge.exe",
+        "cpu": 0,
+        "memoria": 1.1919193293084132
+      },
+      {
+        "pid": 4780,
+        "nome": "msedge.exe",
+        "cpu": 0.3,
+        "memoria": 0.5675027075551415
+      },
+      {
+        "pid": 4864,
+        "nome": "explorer.exe",
+        "cpu": 0,
+        "memoria": 0.6424174004410297
+      },
+      {
+        "pid": 4896,
+        "nome": "msedge.exe",
+        "cpu": 1.0,
+        "memoria": 0.39714350807335985
+      },
+      {
+        "pid": 4936,
+        "nome": "dllhost.exe",
+        "cpu": 0,
+        "memoria": 0.059081658502913276
+      },
+      {
+        "pid": 4948,
+        "nome": "GitHubDesktop.exe",
+        "cpu": 0,
+        "memoria": 0.5968522652502938
+      },
+      {
+        "pid": 4996,
+        "nome": "StartMenuExperienceHost.exe",
+        "cpu": 0,
+        "memoria": 0.3540436507194361
+      },
+      {
+        "pid": 5004,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.04441750585290962
+      },
+      {
+        "pid": 5032,
+        "nome": "SearchApp.exe",
+        "cpu": 0,
+        "memoria": 0.3679214647490772
+      },
+      {
+        "pid": 5072,
+        "nome": "Code.exe",
+        "cpu": 0,
+        "memoria": 0.6684090797032826
+      },
+      {
+        "pid": 5080,
+        "nome": "SearchIndexer.exe",
+        "cpu": 0,
+        "memoria": 0.1894013455316414
+      },
+      {
+        "pid": 5100,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.11361530444481092
+      },
+      {
+        "pid": 5124,
+        "nome": "msedge.exe",
+        "cpu": 0,
+        "memoria": 0.10099138172872082
+      },
+      {
+        "pid": 5148,
+        "nome": "ctfmon.exe",
+        "cpu": 0.1,
+        "memoria": 0.08611470512726785
+      },
+      {
+        "pid": 5164,
+        "nome": "msedge.exe",
+        "cpu": 0,
+        "memoria": 0.28089290663057725
+      },
+      {
+        "pid": 5200,
+        "nome": "taskhostw.exe",
+        "cpu": 0,
+        "memoria": 0.07283195816168482
+      },
+      {
+        "pid": 5224,
+        "nome": "msedge.exe",
+        "cpu": 0,
+        "memoria": 0.2554750420372376
+      },
+      {
+        "pid": 5360,
+        "nome": "msedge.exe",
+        "cpu": 0,
+        "memoria": 0.11023617361676662
+      },
+      {
+        "pid": 5384,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.05128202948472293
+      },
+      {
+        "pid": 5396,
+        "nome": "WMIADAP.exe",
+        "cpu": 0,
+        "memoria": 0.04739284117320022
+      },
+      {
+        "pid": 5404,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.09429687725806699
+      },
+      {
+        "pid": 5536,
+        "nome": "Code.exe",
+        "cpu": 0.4,
+        "memoria": 1.0031768080262646
+      },
+      {
+        "pid": 5600,
+        "nome": "Code.exe",
+        "cpu": 0,
+        "memoria": 2.421497902813647
+      },
+      {
+        "pid": 5728,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.0465427453674029
+      },
+      {
+        "pid": 5740,
+        "nome": "Code.exe",
+        "cpu": 0,
+        "memoria": 0.25354107407904874
+      },
+      {
+        "pid": 5820,
+        "nome": "GitHubDesktop.exe",
+        "cpu": 0,
+        "memoria": 0.3156830774828323
+      },
+      {
+        "pid": 5996,
+        "nome": "AggregatorHost.exe",
+        "cpu": 0,
+        "memoria": 0.03432261815906653
+      },
+      {
+        "pid": 6056,
+        "nome": "Code.exe",
+        "cpu": 0.3,
+        "memoria": 0.701499058943943
+      },
+      {
+        "pid": 6256,
+        "nome": "Code.exe",
+        "cpu": 0.2,
+        "memoria": 3.88402397950249
+      },
+      {
+        "pid": 6268,
+        "nome": "python.exe",
+        "cpu": 0.7,
+        "memoria": 0.08938757397958749
+      },
+      {
+        "pid": 6344,
+        "nome": "RuntimeBroker.exe",
+        "cpu": 0,
+        "memoria": 0.12156370022901582
+      },
+      {
+        "pid": 6384,
+        "nome": "RuntimeBroker.exe",
+        "cpu": 0,
+        "memoria": 0.13467642803343935
+      },
+      {
+        "pid": 6460,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.054002336063274335
+      },
+      {
+        "pid": 6528,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.04877424685762086
+      },
+      {
+        "pid": 6560,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.06664751117450937
+      },
+      {
+        "pid": 6748,
+        "nome": "msedge.exe",
+        "cpu": 0,
+        "memoria": 0.13167984031800384
+      },
+      {
+        "pid": 6792,
+        "nome": "Code.exe",
+        "cpu": 2.2,
+        "memoria": 1.753535123408408
+      },
+      {
+        "pid": 6824,
+        "nome": "SearchApp.exe",
+        "cpu": 0,
+        "memoria": 0.8005989775047647
+      },
+      {
+        "pid": 6832,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.20476682722142783
+      },
+      {
+        "pid": 7212,
+        "nome": "pet.exe",
+        "cpu": 0,
+        "memoria": 0.04263230466073526
+      },
+      {
+        "pid": 7244,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.04229226633841634
+      },
+      {
+        "pid": 7312,
+        "nome": "python.exe",
+        "cpu": 0,
+        "memoria": 0.017873264316888515
+      },
+      {
+        "pid": 7480,
+        "nome": "conhost.exe",
+        "cpu": 0,
+        "memoria": 0.05878412497088422
+      },
+      {
+        "pid": 7656,
+        "nome": "smartscreen.exe",
+        "cpu": 0,
+        "memoria": 0.1216912145998854
+      },
+      {
+        "pid": 7764,
+        "nome": "msedge.exe",
+        "cpu": 0,
+        "memoria": 0.0396782217355896
+      },
+      {
+        "pid": 7820,
+        "nome": "msedge.exe",
+        "cpu": 0,
+        "memoria": 0.25260596869267166
+      },
+      {
+        "pid": 7828,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.050559448049795216
+      },
+      {
+        "pid": 7832,
+        "nome": "GitHubDesktop.exe",
+        "cpu": 0,
+        "memoria": 0.5364954630386845
+      },
+      {
+        "pid": 7988,
+        "nome": "NisSrv.exe",
+        "cpu": 0,
+        "memoria": 0.06192947945233428
+      },
+      {
+        "pid": 8020,
+        "nome": "RuntimeBroker.exe",
+        "cpu": 0,
+        "memoria": 0.13291247923640995
+      },
+      {
+        "pid": 8076,
+        "nome": "cloudcode_cli.exe",
+        "cpu": 0,
+        "memoria": 0.3514083537214644
+      },
+      {
+        "pid": 8232,
+        "nome": "msedge.exe",
+        "cpu": 0,
+        "memoria": 0.23779304927665348
+      },
+      {
+        "pid": 8292,
+        "nome": "msedge.exe",
+        "cpu": 0,
+        "memoria": 0.16970037523228867
+      },
+      {
+        "pid": 8488,
+        "nome": "Code.exe",
+        "cpu": 0,
+        "memoria": 0.9424162103069017
+      },
+      {
+        "pid": 8520,
+        "nome": "python.exe",
+        "cpu": 0,
+        "memoria": 0.017830759526598648
+      },
+      {
+        "pid": 8552,
+        "nome": "msedgewebview2.exe",
+        "cpu": 0,
+        "memoria": 0.038573097188053095
+      },
+      {
+        "pid": 8588,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.04027328879964772
+      },
+      {
+        "pid": 8704,
+        "nome": "msedge.exe",
+        "cpu": 0,
+        "memoria": 0.5383231690211486
+      },
+      {
+        "pid": 8784,
+        "nome": "msedgewebview2.exe",
+        "cpu": 0,
+        "memoria": 0.5883938119826104
+      },
+      {
+        "pid": 8872,
+        "nome": "M365Copilot.exe",
+        "cpu": 0,
+        "memoria": 0.5257630034904934
+      },
+      {
+        "pid": 8900,
+        "nome": "TextInputHost.exe",
+        "cpu": 0,
+        "memoria": 0.22468032147222994
+      },
+      {
+        "pid": 8976,
+        "nome": "msedge.exe",
+        "cpu": 0,
+        "memoria": 0.5839945661876093
+      },
+      {
+        "pid": 9168,
+        "nome": "RuntimeBroker.exe",
+        "cpu": 0,
+        "memoria": 0.05525622737682537
+      },
+      {
+        "pid": 9412,
+        "nome": "msedgewebview2.exe",
+        "cpu": 0,
+        "memoria": 0.24831298487339523
+      },
+      {
+        "pid": 9424,
+        "nome": "msedgewebview2.exe",
+        "cpu": 0,
+        "memoria": 0.1988374089759916
+      },
+      {
+        "pid": 9484,
+        "nome": "msedgewebview2.exe",
+        "cpu": 0,
+        "memoria": 0.10086386735785123
+      },
+      {
+        "pid": 9692,
+        "nome": "msedgewebview2.exe",
+        "cpu": 0,
+        "memoria": 1.1189598567758587
+      },
+      {
+        "pid": 9824,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.03260117415232697
+      },
+      {
+        "pid": 9924,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.09113027038147199
+      },
+      {
+        "pid": 9968,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.06996288481711889
+      },
+      {
+        "pid": 10016,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.1040092218393013
+      },
+      {
+        "pid": 10732,
+        "nome": "conhost.exe",
+        "cpu": 0,
+        "memoria": 0.059272930059217674
+      },
+      {
+        "pid": 10872,
+        "nome": "conhost.exe",
+        "cpu": 0,
+        "memoria": 0.03419510378819693
+      },
+      {
+        "pid": 10960,
+        "nome": "python.exe",
+        "cpu": 0,
+        "memoria": 0.25220217318491794
+      },
+      {
+        "pid": 11248,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.06154693633972549
+      },
+      {
+        "pid": 11328,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.05931543484950754
+      },
+      {
+        "pid": 11348,
+        "nome": "svchost.exe",
+        "cpu": 0,
+        "memoria": 0.07083423301806113
+      },
+      {
+        "pid": 11500,
+        "nome": "pet.exe",
+        "cpu": 0,
+        "memoria": 0.0352789759405885
+      },
+      {
+        "pid": 11644,
+        "nome": "python.exe",
+        "cpu": 0,
+        "memoria": 0.26733387852811014
+      },
+      {
+        "pid": 11660,
+        "nome": "WmiPrvSE.exe",
+        "cpu": 0,
+        "memoria": 0.0552137225865355
+      },
+      {
+        "pid": 11676,
+        "nome": "SecurityHealthService.exe",
+        "cpu": 0,
+        "memoria": 0.05991050191356566
+      },
+      {
+        "pid": 12016,
+        "nome": "cmd.exe",
+        "cpu": 0,
+        "memoria": 0.02684177506805017
+      },
+      {
+        "pid": 12056,
+        "nome": "conhost.exe",
+        "cpu": 0,
+        "memoria": 0.03430136576392159
+      },
+      {
+        "pid": 12084,
+        "nome": "conhost.exe",
+        "cpu": 0,
+        "memoria": 0.03394007504645774
+      }
+    ]
+  },
+  "monitoramento": {
+    "media_cpu": 2.3,
+    "media_memoria": 26.2,
+    "max_cpu": 16.5,
+    "picos": 0,
+    "total_amostras": 15,
+    "alertas": 0,
+    "nivel_risco": "BAIXO",
+    "timestamp": "2026-03-06T15:03:01.831877"
+  },
+  "honeypot": null
+}
